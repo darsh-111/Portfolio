@@ -20,7 +20,7 @@ export default function About() {
         <div className="about-grid">
           <div className="about-photo-frame" data-reveal>
             <div className="about-photo">
-              <img src="/images/profile.jpg" alt={profile.name} />
+              <img src={`${import.meta.env.BASE_URL}images/profile.jpg`} alt={profile.name} />
               <span className="about-photo-badge">
                 <span className="badge-dot" /> Open to work
               </span>
