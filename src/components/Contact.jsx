@@ -2,31 +2,63 @@ import { useState } from "react";
 import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaGithub, FaLinkedinIn, FaPaperPlane, FaWhatsapp } from "react-icons/fa";
 import { profile } from "../data/profile.js";
 import SectionHeader from "./SectionHeader.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function Contact() {
+  const { t } = useLanguage();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState(null); // "sending" | "sent" | "error" | "email"
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Portfolio inquiry from ${form.name}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`
-    );
-    window.location.href = `mailto:${profile.contact.email}?subject=${subject}&body=${body}`;
-    setSent(true);
+    const endpoint = profile.contact.formEndpoint;
+
+    if (!endpoint) {
+      const subject = encodeURIComponent(`Portfolio inquiry from ${form.name}`);
+      const body = encodeURIComponent(
+        `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`
+      );
+      window.location.href = `mailto:${profile.contact.email}?subject=${subject}&body=${body}`;
+      setStatus("email");
+      return;
+    }
+
+    setStatus("sending");
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          _subject: `Portfolio inquiry from ${form.name}`,
+        }),
+      });
+      if (res.ok) {
+        setStatus("sent");
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
     <section id="contact" className="section contact">
       <div className="container">
         <SectionHeader
-          eyebrow="Contact"
-          title="Let's build something great together"
-          subtitle="Have a project in mind? I'm one message away."
+          eyebrow={t.contact.eyebrow}
+          title={t.contact.title}
+          subtitle={t.contact.subtitle}
         />
 
         <div className="contact-grid">
@@ -39,7 +71,7 @@ export default function Contact() {
                 <FaEnvelope />
               </span>
               <div>
-                <h4>Email</h4>
+                <h4>{t.contact.email}</h4>
                 <p>{profile.contact.email}</p>
               </div>
             </a>
@@ -48,7 +80,7 @@ export default function Contact() {
                 <FaPhoneAlt />
               </span>
               <div>
-                <h4>Phone</h4>
+                <h4>{t.contact.phone}</h4>
                 <p>{profile.contact.phone}</p>
               </div>
             </a>
@@ -62,7 +94,7 @@ export default function Contact() {
                 <FaWhatsapp />
               </span>
               <div>
-                <h4>WhatsApp</h4>
+                <h4>{t.contact.whatsapp}</h4>
                 <p>{profile.contact.phone}</p>
               </div>
             </a>
@@ -71,7 +103,7 @@ export default function Contact() {
                 <FaMapMarkerAlt />
               </span>
               <div>
-                <h4>Location</h4>
+                <h4>{t.contact.location}</h4>
                 <p>{profile.contact.location}</p>
               </div>
             </div>
@@ -101,24 +133,24 @@ export default function Contact() {
           <form className="card contact-form" data-reveal onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="name">Your Name</label>
+                <label htmlFor="name">{t.contact.yourName}</label>
                 <input
                   id="name"
                   name="name"
                   type="text"
-                  placeholder="John Doe"
+                  placeholder={t.contact.namePh}
                   required
                   value={form.name}
                   onChange={handleChange}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="email">Your Email</label>
+                <label htmlFor="email">{t.contact.yourEmail}</label>
                 <input
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="john@email.com"
+                  placeholder={t.contact.emailPh}
                   required
                   value={form.email}
                   onChange={handleChange}
@@ -126,25 +158,28 @@ export default function Contact() {
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="message">Message</label>
+              <label htmlFor="message">{t.contact.message}</label>
               <textarea
                 id="message"
                 name="message"
                 rows="5"
-                placeholder="Tell me about your project..."
+                placeholder={t.contact.msgPh}
                 required
                 value={form.message}
                 onChange={handleChange}
               />
             </div>
-            <button type="submit" className="btn btn-primary btn-block">
-              Send Message <FaPaperPlane />
+            <button
+              type="submit"
+              className="btn btn-primary btn-block"
+              disabled={status === "sending"}
+            >
+              {status === "sending" ? t.contact.sending : t.contact.send}
+              <FaPaperPlane />
             </button>
-            {sent && (
-              <p className="form-note">
-                Your email app should open — hit send and I'll reply ASAP!
-              </p>
-            )}
+            {status === "sent" && <p className="form-note form-success">{t.contact.success}</p>}
+            {status === "error" && <p className="form-note form-error">{t.contact.error}</p>}
+            {status === "email" && <p className="form-note">{t.contact.emailNote}</p>}
           </form>
         </div>
       </div>

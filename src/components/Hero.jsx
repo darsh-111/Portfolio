@@ -6,6 +6,7 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 import { profile } from "../data/profile.js";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 function useTypewriter(text, typeSpeed = 65, deleteSpeed = 32, holdTime = 1800) {
   const [display, setDisplay] = useState("");
@@ -45,7 +46,8 @@ function useTypewriter(text, typeSpeed = 65, deleteSpeed = 32, holdTime = 1800) 
 }
 
 export default function Hero() {
-  const typedRole = useTypewriter(profile.role);
+  const { t } = useLanguage();
+  const typedRole = useTypewriter(t.hero.role);
   return (
     <section id="home" className="hero">
       <div className="hero-glow hero-glow-1" />
@@ -54,13 +56,13 @@ export default function Hero() {
         <div className="hero-text">
           <div className="hero-avatar" data-reveal>
             <img src={`${import.meta.env.BASE_URL}images/profile.jpg`} alt={profile.name} fetchpriority="high" decoding="async" />
-            <span className="hero-avatar-dot" title="Available for work" />
+            <span className="hero-avatar-dot" title={t.hero.availTitle} />
           </div>
           <span className="badge" data-reveal>
-            <span className="badge-dot" /> Open to work
+            <span className="badge-dot" /> {t.hero.badge}
           </span>
           <h1 className="hero-greeting" data-reveal>
-            Hello, I'm
+            {t.hero.greeting}
           </h1>
           <h2 className="hero-name" data-reveal>
             {profile.name}
@@ -70,21 +72,21 @@ export default function Hero() {
             <span className="hero-cursor">|</span>
           </div>
           <p className="hero-desc" data-reveal>
-            {profile.tagline}
+            {t.hero.tagline}
           </p>
           <div className="hero-actions" data-reveal>
             <a href="#projects" className="btn btn-primary">
-              View My Work <FaArrowRight />
+              {t.hero.viewWork} <FaArrowRight />
             </a>
             <a
               href={`${import.meta.env.BASE_URL}${profile.cvUrl}`}
               className="btn btn-outline"
               download
             >
-              Download CV
+              {t.hero.downloadCv}
             </a>
             <a href="#contact" className="btn btn-outline">
-              Contact Me
+              {t.hero.contact}
             </a>
           </div>
           <div className="hero-socials" data-reveal>

@@ -1,6 +1,7 @@
 import { FaGithub, FaExternalLinkAlt, FaComment, FaShoppingCart } from "react-icons/fa";
 import { profile } from "../data/profile.js";
 import SectionHeader from "./SectionHeader.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 const projectIcons = {
   chat: <FaComment />,
@@ -8,16 +9,18 @@ const projectIcons = {
 };
 
 export default function Projects() {
+  const { t } = useLanguage();
+
   return (
     <section id="projects" className="section projects">
       <div className="container">
         <SectionHeader
-          eyebrow="Portfolio"
-          title="Featured projects"
-          subtitle="Real projects I've built with React.js and Next.js."
+          eyebrow={t.projects.eyebrow}
+          title={t.projects.title}
+          subtitle={t.projects.subtitle}
         />
         <div className="projects-grid">
-          {profile.projects.map((project) => (
+          {profile.projects.map((project, i) => (
             <article className="card project-card" data-reveal key={project.title}>
               <div
                 className="project-preview"
@@ -39,11 +42,13 @@ export default function Projects() {
                     {projectIcons[project.icon]}
                   </div>
                 )}
-                <span className="project-tag">{project.subtitle}</span>
+                <span className="project-tag">
+                  {t.projects.items[i]?.subtitle || project.subtitle}
+                </span>
               </div>
               <div className="project-body">
                 <h3 className="project-title">{project.title}</h3>
-                <p className="project-desc">{project.description}</p>
+                <p className="project-desc">{t.projects.items[i]?.desc || project.description}</p>
                 <div className="project-stack">
                   {project.stack.map((tech) => (
                     <span className="chip" key={tech}>
@@ -58,7 +63,7 @@ export default function Projects() {
                     rel="noreferrer"
                     className="btn btn-sm btn-primary"
                   >
-                    Live Demo <FaExternalLinkAlt />
+                    {t.projects.live} <FaExternalLinkAlt />
                   </a>
                   <a
                     href={project.repo}
@@ -66,7 +71,7 @@ export default function Projects() {
                     rel="noreferrer"
                     className="btn btn-sm btn-outline"
                   >
-                    <FaGithub /> Code
+                    <FaGithub /> {t.projects.code}
                   </a>
                 </div>
               </div>

@@ -13,6 +13,10 @@ export const profile = {
     phoneFull: "+201026274589",
     whatsapp: "201026274589",
     location: "Egypt",
+    // To activate the real contact form, create a free form at https://formspree.io
+    // and paste your endpoint here, e.g. "https://formspree.io/f/abcdwxyz".
+    // Leave empty ("") to keep the current behavior: the form opens the email app.
+    formEndpoint: "",
   },
   cvUrl: "cv.pdf",
   socials: {

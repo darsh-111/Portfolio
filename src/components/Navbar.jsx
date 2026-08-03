@@ -1,19 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { FiSun, FiMoon } from "react-icons/fi";
 import { useTheme } from "../context/ThemeContext.jsx";
-
-const links = [
-  { href: "#home", label: "Home" },
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#contact", label: "Contact" },
-];
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
+  const { lang, toggleLanguage, t } = useLanguage();
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("#home");
+
+  const links = [
+    { href: "#home", label: t.nav.home },
+    { href: "#about", label: t.nav.about },
+    { href: "#skills", label: t.nav.skills },
+    { href: "#projects", label: t.nav.projects },
+    { href: "#contact", label: t.nav.contact },
+  ];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    links.forEach(({ href }) => {
+      const el = document.querySelector(href);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
 
   return (
     <header className="navbar">
@@ -30,7 +50,11 @@ export default function Navbar() {
         <ul className={open ? "nav-links open" : "nav-links"}>
           {links.map((link) => (
             <li key={link.href}>
-              <a href={link.href} onClick={() => setOpen(false)}>
+              <a
+                href={link.href}
+                className={active === link.href ? "active" : ""}
+                onClick={() => setOpen(false)}
+              >
                 {link.label}
               </a>
             </li>
@@ -41,12 +65,19 @@ export default function Navbar() {
               className="btn btn-primary btn-sm"
               onClick={() => setOpen(false)}
             >
-              Hire Me
+              {t.nav.hireMe}
             </a>
           </li>
         </ul>
 
         <div className="nav-actions">
+          <button
+            className="lang-toggle"
+            onClick={toggleLanguage}
+            aria-label={lang === "en" ? "Switch to Arabic" : "Switch to English"}
+          >
+            {lang === "en" ? "ع" : "EN"}
+          </button>
           <button
             className="theme-toggle"
             onClick={toggleTheme}
@@ -55,7 +86,7 @@ export default function Navbar() {
             {theme === "dark" ? <FiSun /> : <FiMoon />}
           </button>
           <a href="#contact" className="btn btn-primary btn-sm nav-hire">
-            Hire Me
+            {t.nav.hireMe}
           </a>
           <button
             className="hamburger"

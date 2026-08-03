@@ -10,6 +10,7 @@ import {
 import { SiNextdotjs, SiPostman } from "react-icons/si";
 import { profile } from "../data/profile.js";
 import SectionHeader from "./SectionHeader.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 const iconMap = {
   html: <FaHtml5 className="skill-icon skill-html" />,
@@ -23,20 +24,22 @@ const iconMap = {
 };
 
 export default function Skills() {
+  const { t } = useLanguage();
+
   return (
     <section id="skills" className="section skills">
       <div className="container">
         <SectionHeader
-          eyebrow="My Skills"
-          title="Technologies I work with"
-          subtitle="The tools I use every day to build fast, modern and responsive interfaces."
+          eyebrow={t.skills.eyebrow}
+          title={t.skills.title}
+          subtitle={t.skills.subtitle}
         />
         <div className="skills-grid">
           {profile.skills.map((skill) => (
-            <div className="card skill-card" data-reveal key={skill.name}>
+            <div className="card skill-card" data-reveal key={skill.icon}>
               <div className="skill-card-top">
                 {iconMap[skill.icon] || <FaCode className="skill-icon" />}
-                <h3 className="skill-name">{skill.name}</h3>
+                <h3 className="skill-name">{t.skills.names[skill.icon] || skill.name}</h3>
               </div>
               <div className="skill-bar">
                 <span
