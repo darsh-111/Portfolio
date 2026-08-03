@@ -67,7 +67,7 @@ export const profile = {
       repo: "https://github.com/darsh-111/social-app",
       accent: "#6366f1",
       icon: "chat",
-      image: "/projects/social-app.png",
+      image: "/projects/social-app.jpeg",
     },
     {
       title: "ShopVerse",
@@ -79,7 +79,7 @@ export const profile = {
       repo: "https://github.com/darsh-111/final_project",
       accent: "#8b5cf6",
       icon: "cart",
-      image: "/projects/shopverse.png",
+      image: "/projects/shopverse.jpeg",
     },
   ],
 };
