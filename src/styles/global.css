@@ -48,6 +48,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 84px;
+  overflow-x: hidden;
 }
 
 body {
@@ -263,6 +264,7 @@ img {
   display: flex;
   align-items: center;
   padding: 120px 0 60px;
+  overflow: hidden;
   background:
     radial-gradient(60% 50% at 15% 10%, var(--gradient-soft), transparent),
     radial-gradient(50% 40% at 90% 90%, rgba(6, 182, 212, 0.08), transparent),
