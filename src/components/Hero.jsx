@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   FaGithub,
   FaLinkedinIn,
@@ -6,7 +7,45 @@ import {
 } from "react-icons/fa";
 import { profile } from "../data/profile.js";
 
+function useTypewriter(text, typeSpeed = 65, deleteSpeed = 32, holdTime = 1800) {
+  const [display, setDisplay] = useState("");
+
+  useEffect(() => {
+    let i = 0;
+    let deleting = false;
+    let timeout;
+
+    const tick = () => {
+      if (!deleting) {
+        i += 1;
+        setDisplay(text.slice(0, i));
+        if (i >= text.length) {
+          deleting = true;
+          timeout = setTimeout(tick, holdTime);
+          return;
+        }
+        timeout = setTimeout(tick, typeSpeed);
+      } else {
+        i -= 1;
+        setDisplay(text.slice(0, i));
+        if (i <= 0) {
+          deleting = false;
+          timeout = setTimeout(tick, 400);
+          return;
+        }
+        timeout = setTimeout(tick, deleteSpeed);
+      }
+    };
+
+    timeout = setTimeout(tick, 500);
+    return () => clearTimeout(timeout);
+  }, [text, typeSpeed, deleteSpeed, holdTime]);
+
+  return display;
+}
+
 export default function Hero() {
+  const typedRole = useTypewriter(profile.role);
   return (
     <section id="home" className="hero">
       <div className="hero-glow hero-glow-1" />
@@ -27,7 +66,7 @@ export default function Hero() {
             {profile.name}
           </h2>
           <div className="hero-role" data-reveal>
-            <span className="hero-role-text">{profile.role}</span>
+            <span className="hero-role-text">{typedRole}</span>
             <span className="hero-cursor">|</span>
           </div>
           <p className="hero-desc" data-reveal>
@@ -78,7 +117,7 @@ export default function Hero() {
                 <span className="c-var">developer</span>{" "}
                 <span className="c-op">=</span> {"{"}
                 {"\n"}  name: <span className="c-str">"Youssef"</span>,
-                {"\n"}  role: <span className="c-str">"Front-End Dev"</span>,
+                {"\n"}  role: <span className="c-str">"Front-End Developer"</span>,
                 {"\n"}  stack: [<span className="c-str">"React"</span>,{" "}
                 <span className="c-str">"Next.js"</span>],
                 {"\n"}  hireable: <span className="c-bool">true</span>
