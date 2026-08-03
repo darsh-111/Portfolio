@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaGithub, FaLinkedinIn, FaPaperPlane } from "react-icons/fa";
+import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaGithub, FaLinkedinIn, FaPaperPlane, FaWhatsapp } from "react-icons/fa";
 import { profile } from "../data/profile.js";
 import SectionHeader from "./SectionHeader.jsx";
 
@@ -49,6 +49,20 @@ export default function Contact() {
               </span>
               <div>
                 <h4>Phone</h4>
+                <p>{profile.contact.phone}</p>
+              </div>
+            </a>
+            <a
+              className="contact-card"
+              href={`https://wa.me/${profile.contact.whatsapp}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="contact-icon contact-whatsapp">
+                <FaWhatsapp />
+              </span>
+              <div>
+                <h4>WhatsApp</h4>
                 <p>{profile.contact.phone}</p>
               </div>
             </a>

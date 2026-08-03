@@ -23,9 +23,22 @@ export default function Projects() {
                 className="project-preview"
                 style={{ background: `linear-gradient(135deg, ${project.accent}, #06b6d4)` }}
               >
-                <div className="project-mock">
-                  {projectIcons[project.icon]}
-                </div>
+                {project.image ? (
+                  <>
+                    <img
+                      src={`${import.meta.env.BASE_URL}${project.image}`}
+                      alt={`${project.title} screenshot`}
+                      className="project-shot"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="project-overlay" />
+                  </>
+                ) : (
+                  <div className="project-mock">
+                    {projectIcons[project.icon]}
+                  </div>
+                )}
                 <span className="project-tag">{project.subtitle}</span>
               </div>
               <div className="project-body">

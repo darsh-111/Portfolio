@@ -20,7 +20,12 @@ export default function About() {
         <div className="about-grid">
           <div className="about-photo-frame" data-reveal>
             <div className="about-photo">
-              <img src={`${import.meta.env.BASE_URL}images/profile.jpg`} alt={profile.name} />
+              <img
+                src={`${import.meta.env.BASE_URL}images/profile.jpg`}
+                alt={profile.name}
+                loading="lazy"
+                decoding="async"
+              />
               <span className="about-photo-badge">
                 <span className="badge-dot" /> Open to work
               </span>
@@ -49,12 +54,21 @@ export default function About() {
                 </div>
               ))}
             </dl>
-            <a
-              href={`mailto:${profile.contact.email}?subject=Work%20Opportunity`}
-              className="btn btn-primary btn-block"
-            >
-              Let's Work Together
-            </a>
+            <div className="about-actions">
+              <a
+                href={`mailto:${profile.contact.email}?subject=Work%20Opportunity`}
+                className="btn btn-primary"
+              >
+                Let's Work Together
+              </a>
+              <a
+                href={`${import.meta.env.BASE_URL}${profile.cvUrl}`}
+                className="btn btn-outline"
+                download
+              >
+                Download CV
+              </a>
+            </div>
           </div>
         </div>
       </div>

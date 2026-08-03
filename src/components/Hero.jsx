@@ -53,7 +53,7 @@ export default function Hero() {
       <div className="container hero-content">
         <div className="hero-text">
           <div className="hero-avatar" data-reveal>
-            <img src={`${import.meta.env.BASE_URL}images/profile.jpg`} alt={profile.name} />
+            <img src={`${import.meta.env.BASE_URL}images/profile.jpg`} alt={profile.name} fetchpriority="high" decoding="async" />
             <span className="hero-avatar-dot" title="Available for work" />
           </div>
           <span className="badge" data-reveal>
@@ -75,6 +75,13 @@ export default function Hero() {
           <div className="hero-actions" data-reveal>
             <a href="#projects" className="btn btn-primary">
               View My Work <FaArrowRight />
+            </a>
+            <a
+              href={`${import.meta.env.BASE_URL}${profile.cvUrl}`}
+              className="btn btn-outline"
+              download
+            >
+              Download CV
             </a>
             <a href="#contact" className="btn btn-outline">
               Contact Me

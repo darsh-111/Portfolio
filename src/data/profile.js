@@ -11,8 +11,10 @@ export const profile = {
     email: "yuosefdarwish@gmail.com",
     phone: "01026274589",
     phoneFull: "+201026274589",
+    whatsapp: "201026274589",
     location: "Egypt",
   },
+  cvUrl: "/cv.pdf",
   socials: {
     github: "https://github.com/darsh-111",
     linkedin: "https://www.linkedin.com/in/yuossef-darwish-67aa4231b/",
@@ -65,6 +67,7 @@ export const profile = {
       repo: "https://github.com/darsh-111/social-app",
       accent: "#6366f1",
       icon: "chat",
+      image: "/projects/social-app.png",
     },
     {
       title: "ShopVerse",
@@ -76,6 +79,7 @@ export const profile = {
       repo: "https://github.com/darsh-111/final_project",
       accent: "#8b5cf6",
       icon: "cart",
+      image: "/projects/shopverse.png",
     },
   ],
 };
