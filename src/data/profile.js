@@ -79,7 +79,7 @@ export const profile = {
       description:
         "A complete e-commerce platform inspired by Amazon — product catalog, cart, checkout flow and a clean storefront experience. Built with Next.js for fast pages and great SEO.",
       stack: ["Next.js", "React", "CSS3"],
-      live: "https://final-project-ybx5-git-master-darsh-111s-projects.vercel.app/",
+      live: "https://final-project-ybx5.vercel.app/",
       repo: "https://github.com/darsh-111/final_project",
       accent: "#8b5cf6",
       icon: "cart",
