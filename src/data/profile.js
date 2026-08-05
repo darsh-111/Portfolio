@@ -85,5 +85,17 @@ export const profile = {
       icon: "cart",
       image: "projects/shopverse.jpeg",
     },
+   {
+  title: "Serein Spa",
+  subtitle: "Massage Booking Platform",
+  description:
+    "A massage booking platform with a 5-step booking wizard — pick a service, choose a therapist, and reserve a time slot. Real availability logic prevents double-bookings, and confirmation + reminder emails are sent automatically via EmailJS.",
+  stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Zustand"],
+  live: "https://booking-platform-pzi6.vercel.app/",
+  repo: "https://github.com/darsh-111/booking-platform",
+  accent: "#3f6b52",
+  icon: "spa",
+  image: "projects/serein-spa.jpeg",
+},
   ],
 };
