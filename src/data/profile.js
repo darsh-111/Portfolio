@@ -95,7 +95,7 @@ export const profile = {
   repo: "https://github.com/darsh-111/booking-platform",
   accent: "#3f6b52",
   icon: "spa",
-  image: "projects/serein-spa.jpeg",
+  image: "projects/image.png",
 },
   ],
 };
